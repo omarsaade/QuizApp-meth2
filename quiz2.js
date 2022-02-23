@@ -1,23 +1,57 @@
 // ctrl + shift + L
 //to select all occurences of current selection
+//3adad el question men 5ilel el .length
   let countSpan = document.querySelector(".count span");
+  
+  //ma7al mabade hot el 9 span
   let bulletsSpanContainer = document.querySelector(".bullets .spans");
+  //ma7al el question ma bten3arad
 let quizArea = document.querySelector(".quiz-area");
 //set options
+
+let answersArea = document.querySelector(".answers-area");
+
+let submitButton = document.querySelector(".submit-button");
+
+// i = 0/first question and answers
 let currentIndex = 0;
 
 function getQuestions() {
     let myRequest = new XMLHttpRequest();
     myRequest.onreadystatechange = function () {
         if (this.readyState === 4 && this.status === 200) {
+            //repsonse text => ijo el ma3lument li bel json bas 3a shakel object json "responseText"
             let questionsObject = JSON.parse(this.responseText);
+            //qcount = 9
             let qCount = questionsObject.length;
 
             //create Bullets + Set Questions Count
+            //bte5la2 el daweyer el 9
             createBullets(qCount);
 
             //Add Question Data
+            //bte5la2 el su2el 
             addQuestionData(questionsObject[0],qCount);
+
+//click On Submit
+submitButton.onclick = () => {
+    //Get Right Answer
+let theRightAnswer = questionsObject[currentIndex].right_answer;
+
+
+
+
+};
+
+
+
+
+
+
+
+
+
+
         }
     };
 
@@ -69,8 +103,7 @@ function addQuestionData(obj , count) {
      //Create The Answers
 let mainDiv = document.createElement("div");   
 
-//add Class To Main Div
-mainDiv = document.createElement("div");
+
 
 //add Class To Main Div
 mainDiv.className = 'answer';
@@ -78,11 +111,45 @@ mainDiv.className = 'answer';
 //Create Radio Input
 let radioInput = document.createElement("input");
 
-//add Type  + Name + ID + Data-attribute
+//Add Type  + Name + ID + Data-attribute
 radioInput.name = 'question';
 radioInput.type = 'radio';
 radioInput.id = `answer_${i}`;
 radioInput.dataset.answer = obj[`answer_${i}`];
+//  <input type = "radio" name="question" 
+// id = "answer_1"  data-answer = "To Make Text Bold" ></input> 
+
+//MAke First option Selected
+if (i === 1) {
+    radioInput.checked = true;
+}
+
+//Create Label 
+let theLabel = document.createElement("label");
+
+//add For Attribute
+theLabel.htmlFor = `answer_${i}`;
+
+//Create Label Text
+let theLabelText = document.createTextNode(obj[`answer_${i}`]);
+
+//Add The Text to label
+theLabel.appendChild(theLabelText);
+
+
+//add Input + Label To Main Div
+mainDiv.appendChild(radioInput);
+mainDiv.appendChild(theLabel);
+
+//Append All Divs To answers Area
+answersArea.appendChild(mainDiv);
+
+
+
+
+
+
+
 
  }
 
