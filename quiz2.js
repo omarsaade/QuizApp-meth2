@@ -9,12 +9,14 @@
 let quizArea = document.querySelector(".quiz-area");
 //set options
 
+//maken 3ared el answers
 let answersArea = document.querySelector(".answers-area");
 
 let submitButton = document.querySelector(".submit-button");
 
-
+//final result
 let resultsContainer =  document.querySelector(".results");
+//countdown
 let countdownElement =  document.querySelector(".countdown");
 
 
@@ -30,6 +32,7 @@ function getQuestions() {
         if (this.readyState === 4 && this.status === 200) {
             //repsonse text => ijo el ma3lument li bel json bas 3a shakel object json "responseText"
             let questionsObject = JSON.parse(this.responseText);
+            //question object hye li fia el array taba3 kelshi
             //qcount = 9
             let qCount = questionsObject.length;
 
@@ -50,11 +53,12 @@ submitButton.onclick = () => {
     
     
     //Get Right Answer
+    //jeble el right answer taba3 el 1 for example
 let theRightAnswer = questionsObject[currentIndex].right_answer;
 
 //Increase Index
+//1
 currentIndex++;
-
 //check The Answer
 checkAnswer(theRightAnswer , qCount);
 
@@ -62,50 +66,33 @@ checkAnswer(theRightAnswer , qCount);
 quizArea.innerHTML = "";
 answersArea.innerHTML = "";
 
-
-//add QUestion Data
+//add Question Data
 addQuestionData(questionsObject[currentIndex],qCount);
 
-
-
-
 //Handle Bullets CLass
+//hetele el lon 3al bullets li ana hala2 3laya
 handleBullets();
-
+//m7i el wa2et
 clearInterval(countdownInterval);
+//rje3 shagel elwa2et
 countdown(5,qCount);
 
 //show results
 showResults(qCount);
-
-
-
-
-
-
-
-
-
-
-
-};
-
-
-
-
-
-
-
-
-
-
-        }
-    };
-
-    myRequest.open("GET","html_questions.json",true);
-    myRequest.send();
+};}};
+myRequest.open("GET","html_questions.json",true);
+ myRequest.send();
 }
+
+
+
+
+
+
 getQuestions();
+
+
+
 
 
 function createBullets(num) {
@@ -124,10 +111,16 @@ if (i === 0) {
 
 //append Bullets To Main Bullet Container
 bulletsSpanContainer.appendChild(theBullet);
+ }};
 
 
-    }
-}
+
+
+
+    
+
+
+    //function addQuestionData to create the question and the answers
 
 function addQuestionData(obj , count) {
     if (currentIndex < count) {
@@ -196,10 +189,12 @@ answersArea.appendChild(mainDiv);
 
 
 
- }
+ }}
+}
 
-}
-}
+
+
+
 
 
 function checkAnswer(rAnswer , count) {
