@@ -1,4 +1,3 @@
-// ctrl + shift + L
 //to select all occurences of current selection
 //3adad el question men 5ilel el .length
   let countSpan = document.querySelector(".count span");
@@ -187,7 +186,7 @@ mainDiv.appendChild(radioInput);
 mainDiv.appendChild(theLabel);
 
 //Append All Divs To answers Area
-answersArea.appendChild(mainDiv);
+answersArea.appendChild(mainDiv); 
 
 
 
