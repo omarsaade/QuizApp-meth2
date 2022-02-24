@@ -72,6 +72,9 @@ addQuestionData(questionsObject[currentIndex],qCount);
 //Handle Bullets CLass
 handleBullets();
 
+clearInterval(countdownInterval);
+countdown(5,qCount);
+
 //show results
 showResults(qCount);
 
