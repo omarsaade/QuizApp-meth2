@@ -79,7 +79,9 @@ countdown(5,qCount);
 
 //show results
 showResults(qCount);
-};}};
+};
+}
+};
 myRequest.open("GET","html_questions.json",true);
  myRequest.send();
 }
@@ -94,7 +96,7 @@ getQuestions();
 
 
 
-
+//create 9 bullets 
 function createBullets(num) {
     countSpan.innerHTML = num;
 
