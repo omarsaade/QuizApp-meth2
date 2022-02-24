@@ -13,8 +13,16 @@ let answersArea = document.querySelector(".answers-area");
 
 let submitButton = document.querySelector(".submit-button");
 
+
+let resultsContainer =  document.querySelector(".results");
+let countdownElement =  document.querySelector(".countdown");
+
+
+let bullets = document.querySelector(".bullets");
 // i = 0/first question and answers
 let currentIndex = 0;
+let rightAnswers = 0;
+let countdownInterval;
 
 function getQuestions() {
     let myRequest = new XMLHttpRequest();
@@ -33,10 +41,46 @@ function getQuestions() {
             //bte5la2 el su2el 
             addQuestionData(questionsObject[0],qCount);
 
+            //start CountDown
+countdown(5, qCount);
+//
+
 //click On Submit
 submitButton.onclick = () => {
+    
+    
     //Get Right Answer
 let theRightAnswer = questionsObject[currentIndex].right_answer;
+
+//Increase Index
+currentIndex++;
+
+//check The Answer
+checkAnswer(theRightAnswer , qCount);
+
+//Remove Previous Question
+quizArea.innerHTML = "";
+answersArea.innerHTML = "";
+
+
+//add QUestion Data
+addQuestionData(questionsObject[currentIndex],qCount);
+
+
+
+
+//Handle Bullets CLass
+handleBullets();
+
+//show results
+showResults(qCount);
+
+
+
+
+
+
+
 
 
 
@@ -83,6 +127,9 @@ bulletsSpanContainer.appendChild(theBullet);
 }
 
 function addQuestionData(obj , count) {
+    if (currentIndex < count) {
+        
+    
     // console.log(obj);
     // console.log(count);
  //Create H2 Question Title
@@ -146,19 +193,95 @@ answersArea.appendChild(mainDiv);
 
 
 
-
-
-
-
-
  }
 
+}
+}
 
 
+function checkAnswer(rAnswer , count) {
+    let answers = document.getElementsByName("question");
+    let theChoosenAnswer;
+
+for (let i = 0; i < answers.length; i++) {
+    if (answers[i].checked) {
+        theChoosenAnswer = answers[i].dataset.answer;
+    }
+    
+}
+console.log(`Right Answer Is: ${rAnswer}`);
+console.log(`Choosen Answer Is: ${theChoosenAnswer}`);
+
+if (rAnswer === theChoosenAnswer) {
+    rightAnswers++;
+    console.log("Good Answer");
+}
+
+}
+
+function handleBullets() {
+    let bulletsSpans = document.querySelectorAll(".bullets .spans span");
+let arrayOfSpans = Array.from(bulletsSpans);
+arrayOfSpans.forEach((span , index) => {
+    if (currentIndex === index) {
+        span.className = "on";
+    }
+});
 
 
 }
 
+
+function showResults(count) {
+    if (currentIndex === count ) {
+    //   console.log("Questions Is Finished");
+    quizArea.remove();
+    answersArea.remove();
+    submitButton.remove();
+    bullets.remove();
+
+
+    if (rightAnswers > count / 2 && rightAnswers < count) {
+        theResults = `<span class="good">Good</span>, ${rightAnswers} from ${count}`;
+    } else if (rightAnswers === count) {
+        theResults = `<span class="perfect">Perfect</span>, all Answers Is Good`;
+
+    }else {
+        theResults = `<span class="bad">bad</span>, ${rightAnswers} from ${count} `;
+
+    }
+
+    resultsContainer.innerHTML = theResults;
+    resultsContainer.style.padding = "10px";
+    resultsContainer.style.backgroundColor = "white";
+    resultsContainer.style.marginTop = "10px";
+
+
+
+    }
+}
+
+
+
+function countdown(duration, count) {
+    if (currentIndex < count) {
+      let minutes, seconds;
+      countdownInterval = setInterval(function () {
+        minutes = parseInt(duration / 60);
+        seconds = parseInt(duration % 60);
+  
+        minutes = minutes < 10 ? `0${minutes}` : minutes;
+        seconds = seconds < 10 ? `0${seconds}` : seconds;
+  
+        countdownElement.innerHTML = `${minutes}:${seconds}`;
+  
+        if (--duration < 0) {
+          clearInterval(countdownInterval);
+          submitButton.click();
+        }
+      }, 1000);
+    }
+  }
 
 
 
